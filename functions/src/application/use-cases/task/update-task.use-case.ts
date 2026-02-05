@@ -20,6 +20,10 @@ export class UpdateTaskUseCase {
       task.description = dto.description;
     }
 
+    if (dto.completed !== undefined) {
+      task.completed = dto.completed;
+    }
+
     return  this.taskRepo.update(task);
   }
   }

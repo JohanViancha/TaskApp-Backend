@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { FirestoreTaskRepository } from "../../infrastructure/repositories/firestore-task.repository";
-import { TaskController } from "./controller";
-import { GetTaskUseCase } from "../../application/use-cases/task/get-tasks.use-case";
 import { CreateTaskUseCase } from "../../application/use-cases/task/create-task.use-case";
 import { DeleteTaskUseCase } from "../../application/use-cases/task/delete-task.use-case";
+import { GetTaskUseCase } from "../../application/use-cases/task/get-tasks.use-case";
 import { UpdateTaskUseCase } from "../../application/use-cases/task/update-task.use-case";
+import { FirestoreTaskRepository } from "../../infrastructure/repositories/firestore-task.repository";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import { TaskController } from "./controller";
 
 export class TaskRoutes {
   static get routes(): Router {
@@ -15,13 +16,17 @@ export class TaskRoutes {
     const getTask = new GetTaskUseCase(taskRepository);
     const deleteTask = new DeleteTaskUseCase(taskRepository);
     const updateTask = new UpdateTaskUseCase(taskRepository);
+    const taskController = new TaskController(
+      getTask,
+      createTask,
+      deleteTask,
+      updateTask,
+    );
 
-    const taskController = new TaskController(getTask, createTask, deleteTask, updateTask);
-
-    router.get("/:userId", taskController.getTasks);
-    router.post("/", taskController.createTask);
-    router.put("/:taskId", taskController.updateTask);
-    router.delete("/:taskId", taskController.deleteTask);
+    router.get("/:userId", authMiddleware, taskController.getTasks);
+    router.post("/", authMiddleware, taskController.createTask);
+    router.put("/:taskId", authMiddleware, taskController.updateTask);
+    router.delete("/:taskId", authMiddleware, taskController.deleteTask);
 
     return router;
   }

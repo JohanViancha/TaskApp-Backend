@@ -1,25 +1,21 @@
 import { Request, Response } from "express";
-import { CreateUserUseCase } from "../../application/use-cases/user/create-user.use-case";
-import { FindUserByEmailUseCase } from "../../application/use-cases/user/find-by-email.use-case";
+import { v4 as uuidv4 } from "uuid";
 import { CreateUserDTO } from "../../application/dto/create-user.dto";
+import { CreateUserUseCase } from "../../application/use-cases/user/create-user.use-case";
 
 export class UserController {
   constructor(
     private createUserUseCase: CreateUserUseCase,
-    private findUserByEmail: FindUserByEmailUseCase,
   ) {}
-
-  validateUser = async (req: Request, res: Response) => {
-    const email = req.query?.email as string;
-
-    const user = await this.findUserByEmail.execute({ email });
-    return res.json(user);
-  };
 
   createUser = async (req: Request, res: Response) => {
     const userBody: CreateUserDTO = req.body;
+    const idUser = uuidv4();
 
-    const user = await this.createUserUseCase.execute(userBody);
+    const user = await this.createUserUseCase.execute({
+      ...userBody,
+      id: idUser,
+    });
     return res.json(user);
   };
 }

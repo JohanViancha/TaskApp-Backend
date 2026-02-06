@@ -11,7 +11,6 @@ export class FirestoreTaskRepository implements TaskRepository {
       .orderBy("createdAt", "desc")
       .get();
 
-
     return snapshot.docs.map((doc) => {
       const data = doc.data();
       return new Task(
@@ -41,22 +40,24 @@ export class FirestoreTaskRepository implements TaskRepository {
   }
 
   async create(task: Task): Promise<Task> {
-    await this.collection.doc().set({
+    await this.collection.doc(task.id).set({
       title: task.title,
       description: task.description,
       completed: task.completed,
       userId: task.userId,
       createdAt: task.createdAt,
     });
+
     return task;
   }
 
-  async update(task: Task): Promise<void> {
+  async update(task: Task): Promise<Task> {
     await this.collection.doc(task.id).update({
       title: task.title,
       description: task.description,
       completed: task.completed,
     });
+    return task;
   }
 
   async delete(id: string): Promise<void> {

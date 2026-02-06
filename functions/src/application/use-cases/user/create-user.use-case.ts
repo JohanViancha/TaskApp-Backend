@@ -6,7 +6,7 @@ export class CreateUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
   async execute(dto: CreateUserDTO) {
-    const user = new User(dto.id || "", dto.email, new Date());
+    const user = new User(dto.id, dto.email, dto.name, new Date());
     return this.userRepository.create(user);
   }
 }

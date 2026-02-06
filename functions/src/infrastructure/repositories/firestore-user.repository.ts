@@ -16,13 +16,16 @@ export class FirestoreUserRepository implements UserRepository {
     const doc = snapshot.docs[0];
     const data = doc.data();
 
-    return new User(data.id, data.email, data.createdAt.toDate());
+
+    return new User(data.id, data.email, data.name, data.createdAt.toDate());
   }
 
   async create(user: User): Promise<User> {
-    await this.collection.add({
+    await this.collection.doc(user.id).set({
+      id: user.id,
+      name: user.name,
       email: user.email,
-      createdAt: user.createdAt,
+      createdAt: user.createdAt
     });
 
     return user;

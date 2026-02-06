@@ -5,6 +5,7 @@ import { CreateTaskDTO } from "../../application/dto/create-task.dto";
 import { DeleteTaskUseCase } from "../../application/use-cases/task/delete-task.use-case";
 import { UpdateTaskDTO } from "../../application/dto/update-task.dto";
 import { UpdateTaskUseCase } from "../../application/use-cases/task/update-task.use-case";
+import { v4 as uuidv4 } from "uuid";
 
 export class TaskController {
   constructor(
@@ -21,13 +22,16 @@ export class TaskController {
       userId,
     });
 
-    res.json(tasks);
+    return res.json(tasks);
   };
 
   createTask = async (req: Request, res: Response) => {
-    const user: CreateTaskDTO = req.body;
-
-    const task = await this.createTaskUseCase.execute(user);
+    const newTask: CreateTaskDTO = req.body;
+    const idTask = uuidv4();
+    const task = await this.createTaskUseCase.execute({
+      ...newTask,
+      id: idTask,
+    });
     return res.json(task);
   };
 
@@ -37,7 +41,7 @@ export class TaskController {
 
     const tasks = await this.updateTaskUseCase.execute(taskId, task);
 
-    res.json(tasks);
+    return res.json(tasks);
   };
 
   deleteTask = async (req: Request, res: Response) => {
@@ -47,6 +51,6 @@ export class TaskController {
       taskId,
     });
 
-    res.json(tasks);
+    return res.json(tasks);
   };
 }

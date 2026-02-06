@@ -7,14 +7,13 @@ export class CreateTaskUseCase {
 
   async execute(dto: CreateTaskDTO) {
     const task = new Task(
-      dto.id || '',
+      dto.id,
       dto.title,
       dto.description,
       false,
       dto.userId,
       new Date(),
     );
-
     return this.taskRepo.create(task);
   }
 }

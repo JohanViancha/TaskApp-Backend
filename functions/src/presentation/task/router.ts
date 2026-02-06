@@ -24,7 +24,7 @@ export class TaskRoutes {
     );
 
     router.get("/:userId", authMiddleware, taskController.getTasks);
-    router.post("/*", authMiddleware, taskController.createTask);
+    router.post("/", authMiddleware, taskController.createTask);
     router.put("/:taskId", authMiddleware, taskController.updateTask);
     router.delete("/:taskId", authMiddleware, taskController.deleteTask);
 

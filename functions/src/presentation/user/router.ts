@@ -11,7 +11,7 @@ export class UserRoutes {
     const createUser = new CreateUserUseCase(userRepository);
     const userController = new UserController(createUser);
 
-    router.post("/*", userController.createUser);
+    router.post("/", userController.createUser);
 
     return router;
   }

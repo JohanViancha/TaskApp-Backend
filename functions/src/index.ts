@@ -1,7 +1,8 @@
-import * as functions from 'firebase-functions';
-import app from './presentation/server';
 import dotenv from 'dotenv';
+import * as functions from 'firebase-functions';
 
 dotenv.config();
 
-export const api = functions.https.onRequest(app);
+export const api = functions.https.onRequest((req, res) => {
+  res.send("¡Funciona!");
+});

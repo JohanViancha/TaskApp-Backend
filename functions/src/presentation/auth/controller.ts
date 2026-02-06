@@ -12,7 +12,7 @@ export class AuthController {
 
       res.cookie("jwtToken", result.token, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "none",
       });
 

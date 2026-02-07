@@ -8,7 +8,7 @@ export class FirestoreTaskRepository implements TaskRepository {
   async findByUser(userId: string): Promise<Task[]> {
     const snapshot = await this.collection
       .where("userId", "==", userId)
-      .orderBy("createdAt", "desc")
+      .orderBy("createdAt", "asc")
       .get();
 
     return snapshot.docs.map((doc) => {

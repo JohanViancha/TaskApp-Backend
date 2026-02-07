@@ -9,7 +9,7 @@ export class AppRoutes {
     const router = Router();
 
     router.use("/tasks", TaskRoutes.create({ jwtService }));
-    router.use("/users", UserRoutes.routes);
+    router.use("/users", UserRoutes.create({ jwtService }));
     router.use("/auth", AuthRoutes.create({ jwtService }));
 
     return router;

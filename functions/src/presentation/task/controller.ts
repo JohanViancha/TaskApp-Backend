@@ -29,10 +29,12 @@ export class TaskController {
 
   createTask = async (req: Request, res: Response) => {
     try {
+      const userId = req.user?.id;
       const newTask: CreateTaskDTO = req.body;
       const idTask = uuidv4();
       const task = await this.createTaskUseCase.execute({
         ...newTask,
+        userId: userId,
         id: idTask,
       });
       return res.json(task);

@@ -7,6 +7,7 @@ import { AuthController } from "./controller";
 
 export class AuthRoutes {
   static create({ jwtService }: Dependencies): Router {
+
     const router = Router();
     const authMiddleware = createAuthMiddleware(jwtService);
 
@@ -14,7 +15,6 @@ export class AuthRoutes {
     const login = new LoginUserUseCase(userRepository, jwtService);
     const authController = new AuthController(login);
 
-    router.get("/logout", authController.logout);
     router.get("/login", authController.login);
     router.get("/me", authMiddleware, authController.me);
 

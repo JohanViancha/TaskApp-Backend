@@ -1,8 +1,7 @@
-import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
-import { AppRoutes } from "./routes";
 import { Dependencies } from "../boostrap/depdencies";
+import { AppRoutes } from "./routes";
 
 export const createServer = ({ jwtService }: Dependencies) => {
   const app = express();
@@ -11,12 +10,11 @@ export const createServer = ({ jwtService }: Dependencies) => {
     cors({
       origin: "https://taskapp-1ffe0.web.app",
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-      credentials: true,
+      allowedHeaders: ["Content-Type", "Authorization"],
     }),
   );
 
   app.use(express.json());
-  app.use(cookieParser());
 
   app.use(AppRoutes.create({ jwtService }));
 

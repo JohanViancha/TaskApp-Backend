@@ -40,7 +40,7 @@ functions/
 │ ├── infrastructure/
 │ │ ├── services/ # Servicios de JWT, Firestore, etc.
 │ │ └── repositories/ # Implementaciones de repositorios
-│ ├── interfaces/
+│ ├── presentacion/
 │ │ └── controllers/ # Controllers de Express
 │ │ └── routes.ts # Rutas de Express
 │ ├── main.ts # Inicialización de Cloud Functions

@@ -11,7 +11,6 @@ export const createServer = ({ jwtService }: Dependencies) => {
     cors({
       origin: "https://taskapp-1ffe0.web.app",
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "Authorization"],
       credentials: true,
     }),
   );

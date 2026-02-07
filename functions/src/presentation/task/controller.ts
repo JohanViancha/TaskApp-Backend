@@ -19,7 +19,7 @@ export class TaskController {
     try {
       const userId = req.user?.id;
 
-      const tasks = await this.getTaskByUserUseCase.execute({userId});
+      const tasks = await this.getTaskByUserUseCase.execute({ userId });
 
       return res.json(tasks);
     } catch (error) {
@@ -30,16 +30,38 @@ export class TaskController {
   createTask = async (req: Request, res: Response) => {
     try {
       const userId = req.user?.id;
-      const newTask: CreateTaskDTO = req.body;
+
+      if (!userId) {
+        return res.status(401).json({
+          error: true,
+          message: "Usuario no autenticado",
+        });
+      }
+
+      const { title } = req.body as CreateTaskDTO;
+
+      if (!title) {
+        return res.status(400).json({
+          error: true,
+          message: 'El campo "Titulo" es obligatorio',
+        });
+      }
+
       const idTask = uuidv4();
+
       const task = await this.createTaskUseCase.execute({
-        ...newTask,
+        ...req.body,
         userId: userId,
         id: idTask,
       });
-      return res.json(task);
+
+      return res.status(201).json(task);
     } catch (error) {
-      return res.status(500).json({ message: "Error al crear la tarea" });
+      console.error("Error creando tarea:", error);
+      return res.status(500).json({
+        error: true,
+        message: "Error al crear la tarea",
+      });
     }
   };
 

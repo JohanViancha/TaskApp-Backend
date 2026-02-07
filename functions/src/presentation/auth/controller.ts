@@ -4,6 +4,16 @@ import { LoginUserUseCase } from "../../application/use-cases/auth/login-user.us
 export class AuthController {
   constructor(private loginUseCase: LoginUserUseCase) {}
 
+  logout = async (req: Request, res: Response) => {
+    res.clearCookie("jwtToken", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    res.json(true);
+  };
+
   login = async (req: Request, res: Response) => {
     try {
       const email = req.query?.email as string;

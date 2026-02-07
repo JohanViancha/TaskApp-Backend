@@ -16,41 +16,55 @@ export class TaskController {
   ) {}
 
   getTasks = async (req: Request, res: Response) => {
-    const { userId } = req.params;
+    try {
+      const userId = req.user?.id;
 
-    const tasks = await this.getTaskByUserUseCase.execute({
-      userId,
-    });
+      const tasks = await this.getTaskByUserUseCase.execute(userId);
 
-    return res.json(tasks);
+      return res.json(tasks);
+    } catch (error) {
+      return res.status(500).json({ message: "Error obteniendo tareas" });
+    }
   };
 
   createTask = async (req: Request, res: Response) => {
-    const newTask: CreateTaskDTO = req.body;
-    const idTask = uuidv4();
-    const task = await this.createTaskUseCase.execute({
-      ...newTask,
-      id: idTask,
-    });
-    return res.json(task);
+    try {
+      const newTask: CreateTaskDTO = req.body;
+      const idTask = uuidv4();
+      const task = await this.createTaskUseCase.execute({
+        ...newTask,
+        id: idTask,
+      });
+      return res.json(task);
+    } catch (error) {
+      return res.status(500).json({ message: "Error al crear la tarea" });
+    }
   };
 
   updateTask = async (req: Request, res: Response) => {
-    const { taskId } = req.params;
-    const task: UpdateTaskDTO = req.body;
+    try {
+      const { taskId } = req.params;
+      const task: UpdateTaskDTO = req.body;
 
-    const tasks = await this.updateTaskUseCase.execute(taskId, task);
+      const tasks = await this.updateTaskUseCase.execute(taskId, task);
 
-    return res.json(tasks);
+      return res.json(tasks);
+    } catch (error) {
+      return res.status(500).json({ message: "Error al editar la tarea" });
+    }
   };
 
   deleteTask = async (req: Request, res: Response) => {
-    const { taskId } = req.params;
+    try {
+      const { taskId } = req.params;
 
-    const tasks = await this.deleteTaskUseCase.execute({
-      taskId,
-    });
+      const tasks = await this.deleteTaskUseCase.execute({
+        taskId,
+      });
 
-    return res.json(tasks);
+      return res.json(tasks);
+    } catch (error) {
+      return res.status(500).json({ message: "Error al crear la tarea" });
+    }
   };
 }

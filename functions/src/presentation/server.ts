@@ -1,22 +1,22 @@
-    import cookieParser from "cookie-parser";
-    import cors from "cors";
-    import express from "express";
-    import { AppRoutes } from "./routes";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import express from "express";
+import { AppRoutes } from "./routes";
 
-    const app = express();
+const app = express();
 
-    app.use(
-      cors({
-        origin: "https://taskapp-1ffe0.web.app",
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization"],
-        credentials: true,
-      }),
-    );
-    
-    app.use(express.json());
-    app.use(cookieParser());
+app.use(
+  cors({
+    origin: "https://taskapp-1ffe0.web.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }),
+);
 
-    app.use(AppRoutes.routes);
+app.use(express.json());
+app.use(cookieParser());
 
-    export default app;
+app.use(AppRoutes.routes);
+
+export default app;

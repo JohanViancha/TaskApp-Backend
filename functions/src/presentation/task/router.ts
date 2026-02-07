@@ -4,8 +4,8 @@ import { DeleteTaskUseCase } from "../../application/use-cases/task/delete-task.
 import { GetTaskUseCase } from "../../application/use-cases/task/get-tasks.use-case";
 import { UpdateTaskUseCase } from "../../application/use-cases/task/update-task.use-case";
 import { FirestoreTaskRepository } from "../../infrastructure/repositories/firestore-task.repository";
-import { authMiddleware } from "../middlewares/auth.middleware";
 import { TaskController } from "./controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 export class TaskRoutes {
   static get routes(): Router {
@@ -23,7 +23,7 @@ export class TaskRoutes {
       updateTask,
     );
 
-    router.get("/:userId", authMiddleware, taskController.getTasks);
+    router.get("/", authMiddleware, taskController.getTasks);
     router.post("/", authMiddleware, taskController.createTask);
     router.put("/:taskId", authMiddleware, taskController.updateTask);
     router.delete("/:taskId", authMiddleware, taskController.deleteTask);

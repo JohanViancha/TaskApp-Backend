@@ -1,39 +1,7 @@
 
----
-
 # 📄 README – Backend (Node.js + Express + Cloud Functions)
 
-```markdown
-# TaskApp - Backend
 
-## Descripción
-
-Backend serverless desarrollado con **Node.js**, **Express**, **TypeScript** y **Cloud Functions**, conectado a **Firebase Firestore**.  
-
-Permite manejar usuarios y tareas con endpoints seguros usando **JWT**.
-
----
-
-## Tecnologías
-
-- Node.js
-- Express.js
-- TypeScript
-- Firebase Cloud Functions
-- Firebase Firestore
-- UUID
-- CORS
-
----
-
-## Estructura de Carpetas
-
-
----
-
-# 📄 README – Backend (Node.js + Express + Cloud Functions)
-
-```markdown
 # TaskApp - Backend
 
 ## Descripción
@@ -58,6 +26,9 @@ Permite manejar usuarios y tareas con endpoints seguros usando **JWT en cookies 
 
 ## Estructura de Carpetas
 
+```plaintext
+
+
 functions/
 ├── src/
 │ ├── domain/
@@ -76,6 +47,7 @@ functions/
 │ 
 
 
+``` 
 
 ---
 
@@ -96,11 +68,8 @@ functions/
 
 ### 1. Instalar dependencias
 
-
 cd functions
 npm install
-
-
 
 
 ### 2. Ejecutar localmente
@@ -111,5 +80,3 @@ npm run serve
 
 firebase deploy --only functions
 
-
-```bash

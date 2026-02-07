@@ -2,14 +2,15 @@ import { Router } from "express";
 import { UserRoutes } from "./user/router";
 import { TaskRoutes } from "./task/router";
 import { AuthRoutes } from "./auth/router";
+import { Dependencies } from "../boostrap/depdencies";
 
 export class AppRoutes {
-  static get routes(): Router {
+  static create({ jwtService }: Dependencies): Router {
     const router = Router();
 
-    router.use("/tasks", TaskRoutes.routes);
+    router.use("/tasks", TaskRoutes.create({ jwtService }));
     router.use("/users", UserRoutes.routes);
-    router.use("/auth", AuthRoutes.routes);
+    router.use("/auth", AuthRoutes.create({ jwtService }));
 
     return router;
   }

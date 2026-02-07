@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import { defineSecret } from "firebase-functions/params";
-
 const JWT_SECRET = defineSecret("JWT_SECRET");
 
 export interface JwtPayload {
@@ -9,6 +8,8 @@ export interface JwtPayload {
 }
 
 export class JwtService {
+  constructor(private readonly secret: string) {}
+  
   sign(payload: JwtPayload) {
     const secret = JWT_SECRET.value();
     return jwt.sign(payload, secret, {
@@ -17,7 +18,6 @@ export class JwtService {
   }
 
   verify(token: string): JwtPayload {
-    const secret = JWT_SECRET.value();
-    return jwt.verify(token, secret) as JwtPayload;
+    return jwt.verify(token, this.secret) as JwtPayload;
   }
 }

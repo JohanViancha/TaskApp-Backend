@@ -19,7 +19,7 @@ export class TaskController {
     try {
       const userId = req.user?.id;
 
-      const tasks = await this.getTaskByUserUseCase.execute(userId);
+      const tasks = await this.getTaskByUserUseCase.execute({userId});
 
       return res.json(tasks);
     } catch (error) {

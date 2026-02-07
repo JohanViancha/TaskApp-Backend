@@ -1,10 +1,9 @@
 import { Router } from "express";
 import { LoginUserUseCase } from "../../application/use-cases/auth/login-user.use-case";
-import { FirestoreUserRepository } from "../../infrastructure/repositories/firestore-user.repository";
-import { JwtService } from "../../infrastructure/services/jwt.service";
-import { AuthController } from "./controller";
-import { createAuthMiddleware } from "../middlewares/auth.middleware";
 import { Dependencies } from "../../boostrap/depdencies";
+import { FirestoreUserRepository } from "../../infrastructure/repositories/firestore-user.repository";
+import { createAuthMiddleware } from "../middlewares/auth.middleware";
+import { AuthController } from "./controller";
 
 export class AuthRoutes {
   static create({ jwtService }: Dependencies): Router {

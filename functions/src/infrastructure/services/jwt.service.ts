@@ -1,6 +1,4 @@
 import jwt from "jsonwebtoken";
-import { defineSecret } from "firebase-functions/params";
-const JWT_SECRET = defineSecret("JWT_SECRET");
 
 export interface JwtPayload {
   id: string;
@@ -11,8 +9,7 @@ export class JwtService {
   constructor(private readonly secret: string) {}
   
   sign(payload: JwtPayload) {
-    const secret = JWT_SECRET.value();
-    return jwt.sign(payload, secret, {
+    return jwt.sign(payload, this.secret, {
       expiresIn: "1h",
     });
   }
